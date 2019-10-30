@@ -8,4 +8,4 @@ export_presets.cfg
 data_*/
 
 # Test levels
-test_level_
+test_level_*
