@@ -54,5 +54,6 @@ collision_mask = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetection/Hitbox"]
 position = Vector2( -6.10297, 0.0657697 )
 shape = SubResource( 4 )
+[connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_AttackTimer_timeout"]
 [connection signal="body_entered" from="PlayerDetection/Hitbox" to="." method="_on_Hitbox_body_entered"]

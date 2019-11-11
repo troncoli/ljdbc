@@ -1,9 +1,11 @@
 extends KinematicBody2D
 
+# stats
 export (int) var speed = 125
-var velocity = Vector2()
+export (int) var damage = 5
+export (int) var health = 10
 
-var damage = 15
+var velocity = Vector2()
 var player
 
 func _ready():
@@ -41,3 +43,12 @@ func _on_AttackTimer_timeout():
 		if body.name == "Player":
 			# TODO Hit Function
 			body.hit(damage)
+
+func hit(damage):
+	# Enable death animation
+	#$AnimatedSprite.play("death")
+	queue_free() # temp destroy function
+
+func _on_AnimatedSprite_animation_finished():
+	if $AnimatedSprite.animation == "death":
+		queue_free()
