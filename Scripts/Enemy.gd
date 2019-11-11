@@ -22,13 +22,13 @@ func _process(delta):
 		if body and body.name == "Player":
 			#$AnimatedSprite.play("attack")
 			$AttackTimer.start(1.0)
-			print("ATTACK")
+			print("ENEMY ATTACK")
 
 func _physics_process(delta):
 	if player and $AttackTimer.is_stopped():
 		# move toward player
 		var vector = (player.get_central_position() - self.position)
-		if (vector.length() > 50):
+		if (vector.length() > 42):
 			velocity = vector.normalized() * speed
 			move_and_slide(velocity)
 
@@ -40,5 +40,4 @@ func _on_AttackTimer_timeout():
 	for body in $PlayerDetection/Hitbox.get_overlapping_bodies():
 		if body.name == "Player":
 			# TODO Hit Function
-#			body.get_parent().hit(damage)
-			print("HIT")
+			body.hit(damage)

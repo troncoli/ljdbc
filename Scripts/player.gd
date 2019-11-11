@@ -1,6 +1,9 @@
 extends KinematicBody2D
 
+# stats
 export (int) var speed = 300
+export (int) var health = 100
+var immune = false
 
 var Projectile = preload("res://Objects/projectile-fireball.tscn")
 var Slash = preload("res://Objects/slash-2.tscn")
@@ -127,3 +130,29 @@ func _physics_process(delta):
 
 func get_central_position():
 	return $CollisionShape2D.get_global_transform().origin
+	
+func hit(damage):
+	if not immune:
+		health = health - damage
+		print("PLAYER HEALTH : " + str(health))
+		# is dead
+		if health <= 0:
+			die()
+			return
+		# enable immunity
+		immune = true
+		$ImmuneTimer.start()
+		$SpriteTimer.start()
+		
+
+func die():
+	pass # launch game over
+
+func _on_ImmuneTimer_timeout():
+	immune = false
+	$SpriteTimer.stop()
+	$AnimatedSprite.show()
+
+
+func _on_SpriteTimer_timeout():
+	$AnimatedSprite.visible = not $AnimatedSprite.visible
