@@ -18,7 +18,9 @@ animations = [ {
 radius = 12.9091
 height = 25.6182
 
-[node name="Fireball" type="KinematicBody2D"]
+[node name="Fireball" type="KinematicBody2D" groups=[
+"Projectile",
+]]
 position = Vector2( 300, 260 )
 script = ExtResource( 1 )
 
