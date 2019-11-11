@@ -124,3 +124,6 @@ func _physics_process(delta):
 	
 	if canWalk:
 		velocity = move_and_slide(velocity)
+
+func get_central_position():
+	return $CollisionShape2D.get_global_transform().origin

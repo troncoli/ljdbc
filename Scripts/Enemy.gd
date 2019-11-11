@@ -15,8 +15,7 @@ func _ready():
 func _process(delta):
 	if player and $AttackTimer.is_stopped():
 		# Update direction
-		var vector = (player.position - self.position)
-		var playerAngle = position.angle_to(vector)
+		var playerAngle = position.angle_to_point(player.get_central_position()) + PI/2
 		$PlayerDetection.rotation = playerAngle
 		# Detect player
 		var body = $PlayerDetection.get_collider()
@@ -28,7 +27,7 @@ func _process(delta):
 func _physics_process(delta):
 	if player and $AttackTimer.is_stopped():
 		# move toward player
-		var vector = (player.position - self.position)
+		var vector = (player.get_central_position() - self.position)
 		if (vector.length() > 50):
 			velocity = vector.normalized() * speed
 			move_and_slide(velocity)
