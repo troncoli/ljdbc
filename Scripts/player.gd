@@ -10,11 +10,27 @@ var Slash = preload("res://Objects/slash-2.tscn")
 var velocity = Vector2()
 
 var lastPressed = 'ui_up'
+var direction = Vector2.DOWN
 
 #walking
 export (float) var canWalkCooldown = 0.5
 var canWalkTimer = canWalkCooldown
 var canWalk = true
+
+# Sprites with directions
+var idleSprite = {
+	Vector2.UP: "idleN",
+	Vector2.DOWN: "idleS",
+	Vector2.RIGHT: "idleE",
+	Vector2.LEFT: "idleE",
+}
+
+var walkSprite = {
+	Vector2.UP: "walkN",
+	Vector2.DOWN: "walkS",
+	Vector2.RIGHT: "walkE",
+	Vector2.LEFT: "walkE",
+}
 
 #shoot
 export (float) var shootingCooldown = 1.0
@@ -28,7 +44,7 @@ var meleeing = false
 
 func get_input():
 	velocity = Vector2()
-	if Input.is_key_pressed(KEY_K) and !shooting: 
+	if Input.is_key_pressed(KEY_K) and !shooting:
 		shoot()
 	elif Input.is_key_pressed(KEY_J) and !meleeing:
 		melee()
@@ -37,25 +53,31 @@ func get_input():
 			velocity.x += 1
 			$AnimatedSprite.flip_h = false
 			lastPressed = 'ui_right'
+			direction = Vector2.RIGHT
 		if Input.is_action_pressed('ui_left'):
 			velocity.x -= 1
 			$AnimatedSprite.flip_h = true
 			lastPressed = 'ui_left'
+			direction = Vector2.LEFT
 		if Input.is_action_pressed('ui_down'):
 			velocity.y += 1
+			$AnimatedSprite.flip_h = false
 			lastPressed = 'ui_down'
+			direction = Vector2.DOWN
 		if Input.is_action_pressed('ui_up'):
 			velocity.y -= 1
+			$AnimatedSprite.flip_h = false
 			lastPressed = 'ui_up'
+			direction = Vector2.UP
 		if velocity.length() > 0 && canWalk:
 			velocity = velocity.normalized() * speed
-			$AnimatedSprite.play("walking")
+			$AnimatedSprite.play(walkSprite[direction])
 		elif shooting and shootingTimer > shootingCooldown/2:
 			$AnimatedSprite.play("attack")
 		elif meleeing and meleeTimer > meleeCooldown/2:
 			$AnimatedSprite.play("attack")
 		else:
-			$AnimatedSprite.play("idle")
+			$AnimatedSprite.play(idleSprite[direction])
 
 func shoot():
 	shooting = true
@@ -143,7 +165,6 @@ func hit(damage):
 		immune = true
 		$ImmuneTimer.start()
 		$SpriteTimer.start()
-		
 
 func die():
 	pass # launch game over
@@ -152,7 +173,6 @@ func _on_ImmuneTimer_timeout():
 	immune = false
 	$SpriteTimer.stop()
 	$AnimatedSprite.show()
-
 
 func _on_SpriteTimer_timeout():
 	$AnimatedSprite.visible = not $AnimatedSprite.visible

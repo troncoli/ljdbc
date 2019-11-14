@@ -1,9 +1,24 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Scripts/player.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/sorc_1.png" type="Texture" id=2]
 [ext_resource path="res://Sprites/sorc_2.png" type="Texture" id=3]
-[ext_resource path="res://Sprites/sorc_3.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/avatar_animations/idleN.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/avatar_animations/walkS1.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/avatar_animations/walkS2.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/avatar_animations/walkS3.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/avatar_animations/walkS4.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/avatar_animations/walkE1.png" type="Texture" id=9]
+[ext_resource path="res://Sprites/avatar_animations/walkE2.png" type="Texture" id=10]
+[ext_resource path="res://Sprites/avatar_animations/walkE3.png" type="Texture" id=11]
+[ext_resource path="res://Sprites/avatar_animations/walkE4.png" type="Texture" id=12]
+[ext_resource path="res://Sprites/sorc_3.png" type="Texture" id=13]
+[ext_resource path="res://Sprites/avatar_animations/idleS.png" type="Texture" id=14]
+[ext_resource path="res://Sprites/avatar_animations/walkN1.png" type="Texture" id=15]
+[ext_resource path="res://Sprites/avatar_animations/walkN2.png" type="Texture" id=16]
+[ext_resource path="res://Sprites/avatar_animations/walkN3.png" type="Texture" id=17]
+[ext_resource path="res://Sprites/avatar_animations/walkN4.png" type="Texture" id=18]
+[ext_resource path="res://Sprites/avatar_animations/idleE.png" type="Texture" id=19]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -19,15 +34,47 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 4 ) ],
 "loop": true,
+"name": "idleN",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ) ],
+"loop": true,
+"name": "walkS",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ) ],
+"loop": true,
+"name": "walkE",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 13 ) ],
+"loop": true,
 "name": "attack",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 14 ) ],
+"loop": true,
+"name": "idleS",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ) ],
+"loop": true,
+"name": "walkN",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 19 ) ],
+"loop": true,
+"name": "idleE",
+"speed": 8.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=2]
 radius = 18.6102
 height = 51.4387
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" groups=[
+"Player",
+]]
 position = Vector2( 303.71, 261.325 )
 script = ExtResource( 1 )
 
@@ -35,7 +82,8 @@ script = ExtResource( 1 )
 position = Vector2( 0.157227, 8.23047 )
 scale = Vector2( 0.1, 0.1 )
 frames = SubResource( 1 )
-animation = "idle"
+animation = "idleS"
+playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0.15, 8.75 )
